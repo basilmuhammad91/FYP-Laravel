@@ -15,8 +15,6 @@
                     <tr>
                         <th>Name</th>
                         <th>Father Name</th>
-<!--                         <th>Email</th>
-                        <th>Password</th> -->
                         <th>DOB</th>
                         <th>Age</th>
                         <th>Gender</th>
@@ -33,6 +31,30 @@
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
+
+                    @foreach($drivers as $obj)
+                    <tr>
+                        <td>{{$obj->user_details->name}}</td>
+                        <td>{{$obj->user_details->father_name}}</td>
+                        <td>{{$obj->user_details->date_of_birth}}</td>
+                        <td>{{$obj->user_details->age}}</td>
+                        <td>{{$obj->user_details->gender}}</td>
+                        <td>{{$obj->user_details->marital_status}}</td>
+                        <td>{{$obj->user_details->address}}</td>
+                        <td>{{$obj->user_details->city}}</td>
+                        <td>{{$obj->user_details->postal_code}}</td>
+                        <td>{{$obj->user_details->cnic_no}}</td>
+                        <td>{{$obj->user_details->phone_no_personal}}</td>
+                        <td>{{$obj->user_details->phone_no_residence}}</td>
+                        <td>Cnic Image</td>
+                        <td>License Image</td>
+                        <td>{{ $obj->shift_status }}</td>
+                        <td>{{$obj->user_details->status}}</td>
+                        <td><a href="{{action('DriverController@edit')}}?id={{$obj->driver_id}}">Edit</a>
+                            <a href="{{action('DriverController@delete')}}?id={{$obj->driver_id}}">Delete</a></td>
+                    </tr>
+                    @endforeach
+
                   </table>
                 </div>
               </div>

@@ -67,13 +67,13 @@
                       </div>
                       <div class="col-md-1 mt-2">
                         <div class="form-group">
-                          <input class="form-check-input" checked="checked" type="radio" name="gender">
+                          <input class="form-check-input" checked="checked" type="radio" name="gender" value="Male">
                           <label class="bmd-label-floating">Male</label>
                         </div>
                       </div>
                       <div class="col-md-1 mt-2">
                         <div class="form-group">
-                          <input class="form-check-input" type="radio" name="gender">
+                          <input class="form-check-input" type="radio" name="gender" value="Female">
                           <label class="bmd-label-floating">Female</label>
                         </div>
                       </div>

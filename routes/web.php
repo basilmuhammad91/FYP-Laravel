@@ -17,9 +17,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Route::get('/master', function () {
     return view('layouts.master');
 });
+
+Route::get('/dashboard', function(){
+    return view('dashboard');
+})->name('dashboard')->middleware('auth');
 
 Auth::routes();
 
@@ -56,4 +61,7 @@ Route::get('/vendors/create', 'VendorController@create');
 Route::post('/vendors/submit', 'VendorController@submit');
 Route::get('/vendors/edit', 'VendorController@edit');
 Route::post('/vendors/update', 'VendorController@update');
-Route::get('vendors/delete', 'VendorController@delete');
+Route::get('/vendors/delete', 'VendorController@delete');
+
+// SENSOR
+Route::get('/sensor/update_seen', 'SensorController@update_seen')->name('noti.update');

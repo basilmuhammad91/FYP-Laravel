@@ -8,9 +8,18 @@ use App\Models\UserDetail;
 
 class VendorController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
      public function index()
     {
-        return view('vendors.index');
+        $vendors = Vendor::get();
+        return view('vendors.index')
+        ->with('vendors', $vendors)
+        ;
     }
 
     public function create()
@@ -55,24 +64,39 @@ class VendorController extends Controller
     {
         $vendor = Vendor::where(["vendor_id"=>$req->id])->first();
         return view('vendors.edit')
-        ->with('vendor', $vendor)
+        ->with('obj', $vendor)
         ;
     }
 
     public function update(Request $req)
     {
-        $driver = Driver::where(["driver_id"=>$req->id])->update([
+        $vendor = Vendor::where(["vendor_id"=>$req->id])->update([
             "shop_name" => $req->shop_name,
 			"shop_address" => $req->shop_address,
         ]);
 
-        return redirect()->back();
+        $users = UserDetail::where(['user_detail_id'=>$req->user_id])->update([
+            "name" => $req->name,
+            "father_name" => $req->father_name,
+            "date_of_birth" => $req->date_of_birth,
+            "age" => $req->age,
+            "gender" => $req->gender,
+            "marital_status" => $req->marital_status,
+            "address" => $req->address,
+            "postal_code" => $req->postal_code,
+            "phone_no_personal" => $req->phone_no_personal,
+            "phone_no_residence" => $req->phone_no_residence,
+            "cnic_no" => $req->cnic_no,
+            "city" => $req->city,
+            "status" => $req->status
+        ]);
+
+        return redirect()->action('VendorController@index');
     }
 
     public function delete(Request $req)
     {
-        $driver = Driver::where(["driver_id"=>$req->id])->delete();
-
+        $vendor = Vendor::where(["vendor_id"=>$req->id])->delete();
         return redirect()->back();
     }
 }

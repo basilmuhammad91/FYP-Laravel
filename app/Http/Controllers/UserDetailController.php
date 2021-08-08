@@ -4,14 +4,30 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\UserDetail;
+use DB;
 
 class UserDetailController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-    	$user_details = UserDetail::orderBy('user_detail_id', 'desc')
-        ->get()
-        ; 
+    	// $user_details = UserDetail::orderBy('user_detail_id', 'desc')
+     //    ->get()
+//      //    ; 
+//         SELECT * FROM `user_details` 
+// RIGHT JOIN vendors
+// ON
+// user_details.user_detail_id != vendors.user_detail_id
+
+        // $user_details = DB::table('user_details')
+        // ->rightjoin('vendors','vendors.user_detail_id','!=','user_details.user_detail_id')
+        // ->get();
+        $user_details = UserDetail::where('role','=','User')->get();
     	return view('user-details.index')
     	->with('user_details', $user_details)
     	;
@@ -38,10 +54,11 @@ class UserDetailController extends Controller
     	$user_detail->cnic_no = $req->cnic_no;
     	$user_detail->city = $req->city;
     	$user_detail->status = $req->status;
+        $user_detail->role = "User";
     	
     	if($user_detail->save())
     	{
-    		return redirect()->back();
+    		return redirect()->action('UserDetailController@index');
     	}
     }
 
@@ -73,7 +90,7 @@ class UserDetailController extends Controller
 
     	if($user_detail)
     	{
-    		return redirect()->back();
+    		return redirect()->action('UserDetailController@index');
     	}
 
     }

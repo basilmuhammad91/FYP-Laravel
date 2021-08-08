@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 14, 2021 at 08:51 AM
+-- Generation Time: Aug 08, 2021 at 03:43 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.5
 
@@ -41,10 +41,7 @@ CREATE TABLE `drivers` (
 --
 
 INSERT INTO `drivers` (`driver_id`, `user_detail_id`, `license_image`, `cnic_image`, `shift_status`, `date`) VALUES
-(1, 14, NULL, NULL, NULL, '2021-07-11 10:11:44'),
-(2, 15, NULL, NULL, NULL, '2021-07-11 10:12:29'),
-(3, 17, NULL, NULL, 'Morning', '2021-07-11 10:16:17'),
-(4, 18, NULL, NULL, 'Morning', '2021-07-11 10:37:03');
+(5, 24, NULL, NULL, 'Evening', '2021-08-08 08:31:08');
 
 -- --------------------------------------------------------
 
@@ -98,6 +95,30 @@ CREATE TABLE `password_resets` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `sensors`
+--
+
+CREATE TABLE `sensors` (
+  `sensor_id` int(11) NOT NULL,
+  `vehicle_id` int(11) DEFAULT NULL,
+  `lat` double DEFAULT NULL,
+  `long` double DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `seen` varchar(255) DEFAULT 'No',
+  `date` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `sensors`
+--
+
+INSERT INTO `sensors` (`sensor_id`, `vehicle_id`, `lat`, `long`, `user_id`, `seen`, `date`) VALUES
+(1, 1, 2, 2, 1, 'Yes', '2021-08-08 13:26:04'),
+(2, 20, 20, 20, 20, 'Yes', '2021-08-08 13:26:04');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -111,6 +132,13 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Admin', 'admin@admin.com', NULL, '$2y$10$KuL1inEmmLwPNlsDJ5eZYOWpOvsJ380VRuaYJJxqHEJ8ay7ouVm7e', NULL, '2021-08-08 07:01:00', '2021-08-08 07:01:00');
 
 -- --------------------------------------------------------
 
@@ -133,6 +161,7 @@ CREATE TABLE `user_details` (
   `cnic_no` varchar(255) DEFAULT NULL,
   `city` varchar(255) DEFAULT NULL,
   `status` varchar(255) DEFAULT NULL,
+  `role` varchar(255) DEFAULT NULL,
   `date` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -140,28 +169,13 @@ CREATE TABLE `user_details` (
 -- Dumping data for table `user_details`
 --
 
-INSERT INTO `user_details` (`user_detail_id`, `name`, `father_name`, `date_of_birth`, `age`, `gender`, `marital_status`, `address`, `postal_code`, `phone_no_personal`, `phone_no_residence`, `cnic_no`, `city`, `status`, `date`) VALUES
-(1, 'Hello', 'Hello2', '2021-07-06', 12, 'on', 'Single', 'dsfnsdfnsdfnasd', '12987', NULL, NULL, NULL, 'Khi', 'Active', '2021-07-04 18:36:28'),
-(2, 'jdsfndsj hello', 'sdjfnasdjkn', '2021-07-04', 12, NULL, 'Single', 'address', '55555', '0987-3343434', '0000-0000000', '23454-9876666-4', 'dsjkfsdjk', 'Active', '2021-07-04 18:53:10'),
-(3, 'jdsfndsj hello', 'sdjfnasdjkn', '2021-07-04', 12, NULL, 'Married', 'address', '55555', '0987-3343434', '0000-0000000', '23454-9876666-4', 'dsjkfsdjk', 'Not Active', '2021-07-04 19:24:42'),
-(4, 'jdsfndsj hello', 'sdjfnasdjkn', '2021-07-04', 12, NULL, 'Single', 'address', '55555', '0987-3343434', '0000-0000000', '23454-9876666-4', 'dsjkfsdjk', 'Active', '2021-07-04 19:25:04'),
-(6, 'Hamza', 'Hello2', '2021-07-11', 20, 'on', 'Single', 'House No A-16', '55555', '0987-3343434', '0000-0000000', '23454-9876666-4', 'Khi', 'Not Active', '2021-07-11 09:45:38'),
-(7, 'New 2020 Policy', 'Hello2', '2021-07-11', 20, 'on', 'Single', 'House No A-16', '55555', '0987-3343434', '0000-0000000', '23454-9876666-4', 'Khi', 'Not Active', '2021-07-11 09:55:37'),
-(8, 'New 2020 Policy', 'Hello2', '2021-07-15', NULL, 'on', 'Single', 'House No A-16', '55555', '0987-3343434', '0000-0000000', '23454-9876666-4', 'Khi', 'Active', '2021-07-11 09:59:54'),
-(9, NULL, NULL, NULL, NULL, 'on', '-- Select one --', NULL, NULL, '0987-3343434', '0000-0000000', '23454-9876666-4', NULL, '-- Select one --', '2021-07-11 10:01:31'),
-(10, NULL, NULL, NULL, NULL, 'on', '-- Select one --', NULL, NULL, NULL, NULL, NULL, NULL, '-- Select one --', '2021-07-11 10:03:25'),
-(11, NULL, NULL, NULL, NULL, 'on', '-- Select one --', NULL, NULL, NULL, NULL, NULL, NULL, '-- Select one --', '2021-07-11 10:03:26'),
-(12, NULL, NULL, NULL, NULL, 'on', '-- Select one --', NULL, NULL, NULL, NULL, NULL, NULL, '-- Select one --', '2021-07-11 10:03:29'),
-(13, NULL, NULL, NULL, NULL, 'on', '-- Select one --', NULL, NULL, NULL, NULL, NULL, NULL, '-- Select one --', '2021-07-11 10:11:19'),
-(14, NULL, NULL, NULL, NULL, 'on', '-- Select one --', NULL, NULL, NULL, NULL, NULL, NULL, '-- Select one --', '2021-07-11 10:11:44'),
-(15, 'New 2020 Policy', 'Hello2', '2021-07-28', 12, 'on', 'Single', 'House No A-16', '55555', '0987-3343434', '0000-0000000', '23454-9876666-4', 'Khi', 'Active', '2021-07-11 10:12:29'),
-(16, NULL, NULL, NULL, NULL, 'on', '-- Select one --', NULL, NULL, NULL, NULL, NULL, NULL, '-- Select one --', '2021-07-11 10:15:00'),
-(17, 'New 2020 Policy', 'Hello2', '2021-07-15', 10, 'on', 'Single', 'House No A-16', '55555', '0987-3343434', '0000-0000000', '23454-9876666-4', 'Khi', 'Active', '2021-07-11 10:16:17'),
-(18, 'New 2020 Policy', 'Hello2', '2021-07-15', 10, 'on', 'Single', 'House No A-16', '55555', '0987-3343434', '0000-0000000', '23454-9876666-4', 'Khi', 'Active', '2021-07-11 10:37:03'),
-(19, NULL, NULL, NULL, NULL, 'on', '-- Select one --', NULL, NULL, NULL, NULL, NULL, NULL, '-- Select one --', '2021-07-11 10:50:59'),
-(20, NULL, NULL, NULL, NULL, 'on', '-- Select one --', NULL, NULL, NULL, NULL, NULL, NULL, '-- Select one --', '2021-07-11 10:51:19'),
-(21, NULL, NULL, NULL, NULL, 'on', '-- Select one --', NULL, NULL, NULL, NULL, NULL, NULL, '-- Select one --', '2021-07-11 10:53:16'),
-(22, 'Vendor', 'Hello2', '2021-07-11', 10, 'on', 'Single', 'House No A-34', '55555', '0987-3343434', '0000-0000000', '23454-9876666-4', 'Khi', 'Not Active', '2021-07-11 10:54:08');
+INSERT INTO `user_details` (`user_detail_id`, `name`, `father_name`, `date_of_birth`, `age`, `gender`, `marital_status`, `address`, `postal_code`, `phone_no_personal`, `phone_no_residence`, `cnic_no`, `city`, `status`, `role`, `date`) VALUES
+(23, 'sadf', 'Hello2', '2021-08-08', 10, 'on', 'Married', 'dsfsadf', '12321', '0321-8876239', '0387-1298765', '23454-9876666-4', 'dfasdf', 'Not Active', NULL, '2021-08-08 06:58:32'),
+(24, 'Driver_123', 'Hello2', '2021-08-11', 20, 'Female', 'Single', 'dsfsadf', '12321', '0321-7766666', '0000-0000000', '23454-9876666-4', 'dfasdf', 'Not Active', NULL, '2021-08-08 08:31:08'),
+(25, 'User', 'User Father', '2021-08-11', 20, NULL, 'Married', 'address', '23456', '0987-3343433', '0000-0000000', '23454-9876666-4', 'City', 'Not Active', 'User', '2021-08-08 09:19:27'),
+(26, 'sadf', 'Hello2', NULL, 12, 'on', 'Single', 'address', '12321', '0987-3343434', '0387-1298765', '23454-9876666-4', 'dfasdf', 'Not Active', 'User', '2021-08-08 09:20:12'),
+(27, 'sadf', 'Hello2', '2021-08-08', 12, 'Female', 'Single', 'dsfsadf', '12321', '0321-7766666', '0000-0000000', '23454-9876666-4', 'dfasdf', 'Active', 'User', '2021-08-08 10:02:12'),
+(28, 'Vendor123', 'sdfsd', '2021-08-08', 10, 'Male', 'Single', 'dsfsadf', '00000', '0321-8876239', '0000-0000000', '23454-9876666-4', 'dfasdf', 'Not Active', NULL, '2021-08-08 10:52:23');
 
 -- --------------------------------------------------------
 
@@ -189,7 +203,11 @@ CREATE TABLE `vehicles` (
 --
 
 INSERT INTO `vehicles` (`vehicle_id`, `user_detail_id`, `type`, `number`, `color`, `class`, `model_name`, `model_no`, `year`, `manufacturer`, `vehicle_description`, `date`) VALUES
-(1, 1, 'dsfs', 'sdfsd', 'sdfasd', 'dsfsad', 'dfds', 'dfsf', 'dsfs', 'dsfas', 'dsfsd', '2021-07-11 10:46:23');
+(3, 27, 'dsfs', '(2 + 3i) + [1 i]', 'sdfasd', 'dsfsad', 'Vehicle123', 'dfsf', 'dsfs', 'dafsd', 'dsfsd', '2021-08-08 11:19:10'),
+(4, 26, 'dsfs', '(2 + 3i) + [1 i]', 'sdfasd', 'dsfsad', 'Vehicle123', 'dfsf', 'dsfs', 'dafsd', 'dsfsd', '2021-08-08 11:33:22'),
+(5, 24, 'dsfs', '(2 + 3i) + [1 i]', 'sdfasd', 'dsfsad', 'Vehicle123', 'dfsf', 'dsfs', 'dafsd', 'dsfsd', '2021-08-08 11:33:28'),
+(6, 24, 'dsfs', '(2 + 3i) + [1 i]', 'sdfasd', 'dsfsad', 'Vehicle123', 'dfsf', 'dsfs', 'dafsd', 'dsfsd', '2021-08-08 11:34:00'),
+(8, 24, 'dsfs', '(2 + 3i) + [1 i]', 'sdfasd', 'dsfsad', 'Vehicle1234', 'dfsf', 'dsfs', 'dafsd', 'dsfsd', '2021-08-08 11:34:12');
 
 -- --------------------------------------------------------
 
@@ -210,7 +228,7 @@ CREATE TABLE `vendors` (
 --
 
 INSERT INTO `vendors` (`vendor_id`, `user_detail_id`, `shop_name`, `shop_address`, `date`) VALUES
-(1, 22, 'dfsd@gmail.com', 'dsfsdfs', '2021-07-11 10:54:08');
+(3, 28, 'dfsd@gmail.com', 'dsfsadf', '2021-08-08 10:52:23');
 
 --
 -- Indexes for dumped tables
@@ -240,6 +258,12 @@ ALTER TABLE `migrations`
 --
 ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
+
+--
+-- Indexes for table `sensors`
+--
+ALTER TABLE `sensors`
+  ADD PRIMARY KEY (`sensor_id`);
 
 --
 -- Indexes for table `users`
@@ -274,7 +298,7 @@ ALTER TABLE `vendors`
 -- AUTO_INCREMENT for table `drivers`
 --
 ALTER TABLE `drivers`
-  MODIFY `driver_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `driver_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -289,28 +313,34 @@ ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `sensors`
+--
+ALTER TABLE `sensors`
+  MODIFY `sensor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `user_details`
 --
 ALTER TABLE `user_details`
-  MODIFY `user_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `user_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `vehicles`
 --
 ALTER TABLE `vehicles`
-  MODIFY `vehicle_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `vehicle_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `vendors`
 --
 ALTER TABLE `vendors`
-  MODIFY `vendor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `vendor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

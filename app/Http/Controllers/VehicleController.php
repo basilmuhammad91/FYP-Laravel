@@ -8,11 +8,19 @@ use App\Models\UserDetail;
 
 class VehicleController extends Controller
 {
+
+	public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
+    	$vehicle = Vehicle::get();
         $user = UserDetail::get();
     	return view('vehicles.index')
         ->with('user', $user)
+        ->with('vehicle', $vehicle)
         ;
     }
 
@@ -40,21 +48,23 @@ class VehicleController extends Controller
 
 		if($vehicle->save())
 		{
-			return redirect()->back();
+			return redirect()->action('VehicleController@index');
 		}
     }
 
-    public function edit()
+    public function edit(Request $req)
     {
+    	$user = UserDetail::get();
     	$vehicle = Vehicle::where(["vehicle_id"=>$req->id])->first();
     	return view('vehicles.edit')
-    	->with('vehicle', $vehicle)
+    	->with('obj', $vehicle)
+    	->with('user', $user)
     	;
     }
 
     public function update(Request $req)
     {
-    	$vehicle = Vehicle::where(["vehicle_id"=>$req->id])->update([
+    	$vehicle = Vehicle::where(["vehicle_id"=>$req->vehicle_id])->update([
 			"user_detail_id" => $req->user_detail_id,
 			"type" => $req->type,
 			"number" => $req->number,
@@ -65,11 +75,12 @@ class VehicleController extends Controller
 			"year" => $req->year,
 			"manufacturer" => $req->manufacturer,
 			"vehicle_description" => $req->vehicle_description,
+			"user_detail_id" => $req->user_detail_id,
     	]);
 
     	if($vehicle)
     	{
-    		return redirect()->back();
+    		return redirect()->action('VehicleController@index');
     	}
 
     }

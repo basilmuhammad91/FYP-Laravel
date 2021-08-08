@@ -9,9 +9,18 @@ use App\Models\UserDetail;
 class DriverController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        return view('drivers.index');
+        $drivers = Driver::get();
+
+        return view('drivers.index')
+        ->with('drivers', $drivers)
+        ;
     }
 
     public function create()
@@ -96,11 +105,27 @@ class DriverController extends Controller
             ]);
         }
 
-        $driver = Driver::where(["driver_id"=>$req->id])->update([
+        $driver = Driver::where(["driver_id"=>$req->driver_id])->update([
             "shift_status" => $req->shift_status
         ]);
 
-        return redirect()->back();
+        $users = UserDetail::where(['user_detail_id'=>$req->user_id])->update([
+            "name" => $req->name,
+            "father_name" => $req->father_name,
+            "date_of_birth" => $req->date_of_birth,
+            "age" => $req->age,
+            "gender" => $req->gender,
+            "marital_status" => $req->marital_status,
+            "address" => $req->address,
+            "postal_code" => $req->postal_code,
+            "phone_no_personal" => $req->phone_no_personal,
+            "phone_no_residence" => $req->phone_no_residence,
+            "cnic_no" => $req->cnic_no,
+            "city" => $req->city,
+            "status" => $req->status
+        ]);
+
+        return redirect()->action('DriverController@index');
     }
 
     public function delete(Request $req)

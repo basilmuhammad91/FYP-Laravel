@@ -10,4 +10,10 @@ class Driver extends Model
     use HasFactory;
 
     public $timestamps = false;
+
+    public function user_details()
+    {
+    	return $this->hasOne('App\Models\UserDetail','user_detail_id','user_detail_id');
+    }
+
 }
